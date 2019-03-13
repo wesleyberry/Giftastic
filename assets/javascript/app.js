@@ -18,14 +18,27 @@ var shows = ["game of thrones",
 
         $.get(queryURL).then(function(response) {
             console.log(response);
-            var gifRow = $("<row>");
-            var gifCol = $("<col-6>");
-            var gifItself = $("<img src='" + response.data[0].embed_url + "' alt='gif'>");
+            for(var i = 0; i < 10; i++) {
+            var gifRow = $("<div>").addClass("row");
+            var gifCol = $("<div>").addClass("col-12 col-md-6 col-lg-3");
+            var gifCard = $("<div>").addClass("card");
+
+            var gifItself = $("<img src='" + 
+            response.data[i].images.original_still.url + "' alt='gif'>")
+            .addClass("card-img-top");
+
+            var cardBody = $("<div>").addClass("card-body");
+            var cardText = $("<p>" + "Rating: " + 
+            response.data[i].rating+ "</p>").addClass("card-text");
             console.log(showTyped);
-            // console.log(response.data[0].url);
-            // var gRated = $("<p>").text("Rating: " + response.Rated);
-            gifCol.append(gifItself);
-            gifRow.append(gifCol);
+            // var gRated = $("<p>").text("Rating: " + 
+            // response.data[i].rating);
+            cardBody.append(cardText);
+            gifCard.append(gifItself, cardBody);
+            gifCol.append(gifCard);
+            // gifRow.append(gifCol);
+            $(".forGifs").append(gifCol);
+            }
         });
     }
 
