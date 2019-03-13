@@ -43,6 +43,7 @@ var shows = ["game of thrones",
     }
 
 
+
     $(".addShow").on("click", function(event) {
         event.preventDefault();
         var newShow = $(".showInput").val().trim().toLowerCase();
@@ -64,5 +65,6 @@ var shows = ["game of thrones",
         }
     }
     $(document).on("click", ".btn", gifBlock);
+    
 
     makeButtons();
