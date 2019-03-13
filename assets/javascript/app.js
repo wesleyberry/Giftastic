@@ -11,35 +11,27 @@ var shows = ["game of thrones",
 
     function gifBlock() {
         var showTyped = $(this).attr("data-name");
-
-        // var apikey = Y5HLWEx42M4KjcaOgQaEmorM1w1rbx4l;
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + showTyped + 
         "&api_key=Y5HLWEx42M4KjcaOgQaEmorM1w1rbx4l&limit=10&rating=pg";
 
         $.get(queryURL).then(function(response) {
             console.log(response);
             for(var i = 0; i < 10; i++) {
-            // var gifRow = $("<div>").addClass("row");
-            var gifCol = $("<div>").addClass("col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3");
+            var gifCol = $("<div>").addClass("col-12 col-sm-6 col-md-6 col-lg-3 col-xl-1");
             var gifCard = $("<div>").addClass("card");
-
             var gifItself = $("<img src='" + 
             response.data[i].images.original_still.url + "' alt='gif' class='gif'>")
             .addClass("card-img-top")
             .attr("data-animate", response.data[i].images.original.url)
             .attr("data-still", response.data[i].images.original_still.url)
             .attr("data-state", "still");
-
             var cardBody = $("<div>").addClass("card-body");
             var cardText = $("<p>" + "Rating: " + 
             response.data[i].rating+ "</p>").addClass("card-text");
             console.log(showTyped);
-            // var gRated = $("<p>").text("Rating: " + 
-            // response.data[i].rating);
             cardBody.append(cardText);
             gifCard.append(gifItself, cardBody);
             gifCol.append(gifCard);
-            // gifRow.append(gifCol);
             $(".forGifs").prepend(gifCol);
             }
         });
@@ -47,7 +39,6 @@ var shows = ["game of thrones",
 
     function gifAnimate() { 
         var state = $(this).attr("data-state");
-        // console.log($(this).attr("data-state"));
         if (state === "still") {
             $(this).attr("src", $(this).attr("data-animate"));
             $(this).attr("data-state", "animate");
