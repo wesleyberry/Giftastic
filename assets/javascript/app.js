@@ -19,13 +19,16 @@ var shows = ["game of thrones",
         $.get(queryURL).then(function(response) {
             console.log(response);
             for(var i = 0; i < 10; i++) {
-            var gifRow = $("<div>").addClass("row");
-            var gifCol = $("<div>").addClass("col-12 col-md-6 col-lg-3");
+            // var gifRow = $("<div>").addClass("row");
+            var gifCol = $("<div>").addClass("col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3");
             var gifCard = $("<div>").addClass("card");
 
             var gifItself = $("<img src='" + 
-            response.data[i].images.original_still.url + "' alt='gif'>")
-            .addClass("card-img-top");
+            response.data[i].images.original_still.url + "' alt='gif' class='gif'>")
+            .addClass("card-img-top")
+            .attr("data-animate", response.data[i].images.original.url)
+            .attr("data-still", response.data[i].images.original_still.url)
+            .attr("data-state", "still");
 
             var cardBody = $("<div>").addClass("card-body");
             var cardText = $("<p>" + "Rating: " + 
@@ -37,12 +40,24 @@ var shows = ["game of thrones",
             gifCard.append(gifItself, cardBody);
             gifCol.append(gifCard);
             // gifRow.append(gifCol);
-            $(".forGifs").append(gifCol);
+            $(".forGifs").prepend(gifCol);
             }
         });
     }
 
-
+    function gifAnimate() { 
+        var state = $(this).attr("data-state");
+        // console.log($(this).attr("data-state"));
+        if (state === "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "animate");
+          } else {
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-state", "still");
+          }
+    };
+        
+    
 
     $(".addShow").on("click", function(event) {
         event.preventDefault();
@@ -65,6 +80,7 @@ var shows = ["game of thrones",
         }
     }
     $(document).on("click", ".btn", gifBlock);
-    
+
+    $(".forGifs").on("click", ".gif", gifAnimate);
 
     makeButtons();
