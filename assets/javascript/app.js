@@ -17,7 +17,7 @@ var shows = ["game of thrones",
         $.get(queryURL).then(function(response) {
             console.log(response);
             for(var i = 0; i < 10; i++) {
-            var gifCol = $("<div>").addClass("col-12 col-sm-6 col-md-6 col-lg-3 col-xl-1");
+            var gifCol = $("<div>").addClass("col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4");
             var gifCard = $("<div>").addClass("card");
             var gifItself = $("<img src='" + 
             response.data[i].images.original_still.url + "' alt='gif' class='gif'>")
@@ -25,11 +25,18 @@ var shows = ["game of thrones",
             .attr("data-animate", response.data[i].images.original.url)
             .attr("data-still", response.data[i].images.original_still.url)
             .attr("data-state", "still");
+            var gifTitle = $("<p>" + "<strong>Title:</strong><br> " + 
+            response.data[i].title + "</p>").addClass("card-text");
+            var gifSource = $("<p>" + "<strong>Source:</strong><br> " + 
+            response.data[i].source + "</p>").addClass("card-text");
+            if(response.data[i].source === "") {
+                gifSource = $("<p>" + "<strong>Source:</strong><br> N/A</p>").addClass("card-text");;
+            }
             var cardBody = $("<div>").addClass("card-body");
-            var cardText = $("<p>" + "Rating: " + 
+            var cardText = $("<p>" + "<strong>Rating:</strong><br> " + 
             response.data[i].rating+ "</p>").addClass("card-text");
             console.log(showTyped);
-            cardBody.append(cardText);
+            cardBody.append(cardText, gifTitle, gifSource);
             gifCard.append(gifItself, cardBody);
             gifCol.append(gifCard);
             $(".forGifs").prepend(gifCol);

@@ -14,10 +14,15 @@
 .forGifs {
     background-color: rgb(201, 201, 201);
 }
+.card-body {
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+}
 .card-text {
     text-align: center;
     background-color: #28a745;
     color: white;
+    margin-bottom: 1%;
 }
 .card {
     margin-top: 5%;
